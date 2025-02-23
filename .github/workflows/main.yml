@@ -31,4 +31,4 @@ jobs:
 
       - name: Run Streamlit app
         run: |
-          streamlit run app.py  # Run your Streamlit app
+          streamlit run Doc-Insights.py  # Run your Streamlit app
