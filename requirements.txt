@@ -1,7 +1,7 @@
-streamlit==1.21.0
-pandas==1.5.3
-pandasai==3.0.0b11  # or the latest version
-openai==0.27.5     # Update to satisfy pandasai dependency
+streamlit
+pandas
+pandasai
+openai==0.27.5
 transformers==4.25.1
 python-dotenv==1.0.0
-PyMuPDF>=1.19,<1.25
+PyMuPDF<1.25,>=1.19
