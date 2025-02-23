@@ -1,0 +1,34 @@
+name: Run Streamlit App with Hugging Face Model
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_streamlit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pandasai transformers python-dotenv PyMuPDF streamlit
+
+      - name: Set Hugging Face API Key
+        run: echo "HF_API_KEY=${{ secrets.HF_API_KEY }}" >> $GITHUB_ENV  # Set the API key as an environment variable
+
+      - name: Run Streamlit app
+        run: |
+          streamlit run app.py  # Run your Streamlit app
