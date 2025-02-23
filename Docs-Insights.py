@@ -5,22 +5,14 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 from pandasai import PandasAI
 import streamlit as st
 
+# Define the local path to the model
+local_model_path = "/path/to/your/local/model"
 
-api_key = os.getenv("HF_API_KEY")
+# Load the model from local path
+tokenizer = AutoTokenizer.from_pretrained(local_model_path)
+model = AutoModelForCausalLM.from_pretrained(local_model_path)
 
-if api_key is None:
-    st.warning("API key is not set. Please ensure it's configured correctly.")
-else:
-    st.info("API key loaded successfully")
-
-
-model_name = "meta-llama/llama-2-7b-chat"
-
-# Load the model
-tokenizer = AutoTokenizer.from_pretrained(model_name, use_auth_token=api_key)
-model = AutoModelForCausalLM.from_pretrained(model_name, use_auth_token=api_key)
-
-# wrap
+# Wrap
 class HuggingFaceLLM:
     def __init__(self, tokenizer, model):
         self.tokenizer = tokenizer
@@ -31,14 +23,12 @@ class HuggingFaceLLM:
         outputs = self.model.generate(inputs["input_ids"], max_length=50)
         return self.tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-# file uploads
+# File uploads
 def read_csv(file_path):
     return pd.read_csv(file_path)
 
-
 def read_excel(file_path):
     return pd.read_excel(file_path)
-
 
 def read_pdf(file_path):
     doc = fitz.open(file_path)
@@ -47,7 +37,7 @@ def read_pdf(file_path):
         text += page.get_text()
     return text
 
-# file handler
+# File handler
 def read_file(file):
     if file.type == "application/pdf":
         text = read_pdf(file)
@@ -66,16 +56,13 @@ st.title("Data Query App using Hugging Face")
 # File upload
 uploaded_file = st.file_uploader("Upload a file", type=["csv", "xlsx", "xls", "pdf"])
 
-
 if uploaded_file is not None:
-
     data = read_file(uploaded_file)
 
     if isinstance(data, pd.DataFrame):
         st.write("### Data Preview")
         st.write(data.head())
         
-
         llm = HuggingFaceLLM(tokenizer, model)
         pandas_ai = PandasAI(llm)
         
@@ -89,7 +76,6 @@ if uploaded_file is not None:
         st.write("### Extracted Text from PDF:")
         st.write(data[:1000]) 
         
-
         llm = HuggingFaceLLM(tokenizer, model)
         
         # User input for query
