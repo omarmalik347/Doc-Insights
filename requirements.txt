@@ -1,6 +1,6 @@
 streamlit==1.21.0
 pandas==1.5.3
-pandasai==0.0.9
+pandasai==0.6.10  
 transformers==4.25.1
 python-dotenv==1.0.0
 PyMuPDF==1.19.7
