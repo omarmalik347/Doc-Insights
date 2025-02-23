@@ -1,8 +1,8 @@
-streamlit==1.21.0
-pandas==1.5.3
+streamlit>=1.25.0
+pandas>=2.0.0
 pandasai==0.6.10
-openai==0.27.5  # Updated to resolve dependency conflict
-transformers==4.25.1
+openai==0.27.5
+transformers>=4.30.0
 python-dotenv==1.0.0
-PyMuPDF==1.19.7
-numpy>=1.24.0  # Updated to avoid distutils issue in Python 3.12
+PyMuPDF>=1.21.0
+numpy>=1.25.0
